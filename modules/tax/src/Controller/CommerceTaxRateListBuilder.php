@@ -5,6 +5,8 @@
  * Contains \Drupal\commerce_tax\Controller\CommerceTaxRateListBuilder.
  */
 
+namespace Drupal\commerce_tax\Controller;
+
 use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
 use Drupal\Core\Entity\EntityInterface;
 
