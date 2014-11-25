@@ -39,7 +39,7 @@ entity.commerce_tax_type.delete_form:
     _permission: 'administer stores'
 
 entity.commerce_tax_rate.list:
-  path: '/admin/commerce/config/tax_type/{commerce_tax_type}/tax_rate'
+  path: '/admin/commerce/config/tax_type/{commerce_tax_type}/rates'
   defaults:
     _entity_list: 'commerce_tax_rate'
     _title: 'Tax rates'
@@ -49,7 +49,7 @@ entity.commerce_tax_rate.list:
     _permission: 'administer stores'
 
 entity.commerce_tax_rate.add_form:
-  path: '/admin/commerce/config/tax_type/{commerce_tax_type}/tax_rate/add'
+  path: '/admin/commerce/config/tax_type/{commerce_tax_type}/rates/add'
   defaults:
     _entity_form: 'commerce_tax_rate.add'
     _title: 'Add a new tax rate'
@@ -59,7 +59,7 @@ entity.commerce_tax_rate.add_form:
     _entity_create_access: 'commerce_tax_rate'
 
 entity.commerce_tax_rate.edit_form:
-  path: '/admin/commerce/config/tax_type/{commerce_tax_type}/tax_rate/{commerce_tax_rate}'
+  path: '/admin/commerce/config/tax_type/{commerce_tax_type}/rates/{commerce_tax_rate}'
   defaults:
     _entity_form: 'commerce_tax_rate.edit'
     _title: 'Edit a tax rate'
@@ -69,7 +69,7 @@ entity.commerce_tax_rate.edit_form:
     _permission: 'administer stores'
 
 entity.commerce_tax_rate.delete_form:
-  path: '/admin/commerce/config/tax_type/{commerce_tax_type}/tax_rate/{commerce_tax_rate}/delete'
+  path: '/admin/commerce/config/tax_type/{commerce_tax_type}/rates/{commerce_tax_rate}/delete'
   defaults:
     _entity_form: 'commerce_tax_rate.delete'
     _title: 'Delete a tax rate'
