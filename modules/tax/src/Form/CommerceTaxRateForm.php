@@ -12,7 +12,6 @@ use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\commerce_tax\Entity\CommerceTaxRate;
-use CommerceGuys\Tax\Model\TaxTypeInterface;
 
 class CommerceTaxRateForm extends EntityForm {
 
