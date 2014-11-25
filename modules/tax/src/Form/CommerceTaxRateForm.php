@@ -12,6 +12,7 @@ use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\commerce_tax\Entity\CommerceTaxRate;
+use CommerceGuys\Tax\Model\TaxTypeInterface;
 
 class CommerceTaxRateForm extends EntityForm {
 
@@ -49,6 +50,10 @@ class CommerceTaxRateForm extends EntityForm {
     $form = parent::form($form, $form_state);
     $tax_rate = $this->entity;
 
+    $form['type'] = array(
+      '#type' => 'hidden',
+      '#value' => $tax_rate->getType(),
+    );
     $form['id'] = array(
       '#type' => 'textfield',
       '#title' => $this->t('Machine name'),
@@ -92,8 +97,8 @@ class CommerceTaxRateForm extends EntityForm {
     }
     elseif ($tax_rate->isNew()) {
       $loaded_tax_rates = $this->taxRateStorage->loadByProperties(array(
-                            'id' => $id,
-                          ));
+        'id' => $id,
+      ));
       if ($loaded_tax_rates) {
         $form_state->setError($element, $this->t('The machine name is already in use.'));
       }
@@ -107,7 +112,17 @@ class CommerceTaxRateForm extends EntityForm {
     $tax_rate = $this->getEntity();
     $default = $element['#value'];
     if ($default) {
-
+      $loaded_tax_rates = $this->taxRateStorage->loadByProperty(array(
+        'type' => $form_state['values']['type']
+      ));
+      foreach ($loaded_tax_rates as $tax_rate) {
+        if ($tax_rate->isDefault()) {
+          $form_state->setError($element, $this->t('Tax rate %label is already the default.', array(
+            '%label' => $tax_rate->label(),
+          )));
+          break;
+        }
+      }
     }
   }
 

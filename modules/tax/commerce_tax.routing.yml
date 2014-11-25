@@ -51,7 +51,7 @@ entity.commerce_tax_rate.list:
 entity.commerce_tax_rate.add_form:
   path: '/admin/commerce/config/tax_type/{commerce_tax_type}/rates/add'
   defaults:
-    _entity_form: 'commerce_tax_rate.add'
+    _controller: '\Drupal\commerce_tax\Controller\CommerceTaxRateController::addForm'
     _title: 'Add a new tax rate'
   options:
     _admin_route: TRUE
