@@ -37,3 +37,43 @@ entity.commerce_tax_type.delete_form:
     _admin_route: TRUE
   requirements:
     _permission: 'administer stores'
+
+entity.commerce_tax_rate.list:
+  path: '/admin/commerce/config/tax_type/{commerce_tax_type}/tax_rate'
+  defaults:
+    _entity_list: 'commerce_tax_rate'
+    _title: 'Tax rates'
+  options:
+    _admin_route: TRUE
+  requirements:
+    _permission: 'administer stores'
+
+entity.commerce_tax_rate.add_form:
+  path: '/admin/commerce/config/tax_type/{commerce_tax_type}/tax_rate/add'
+  defaults:
+    _entity_form: 'commerce_tax_rate.add'
+    _title: 'Add a new tax rate'
+  options:
+    _admin_route: TRUE
+  requirements:
+    _entity_create_access: 'commerce_tax_rate'
+
+entity.commerce_tax_rate.edit_form:
+  path: '/admin/commerce/config/tax_type/{commerce_tax_type}/tax_rate/{commerce_tax_rate}'
+  defaults:
+    _entity_form: 'commerce_tax_rate.edit'
+    _title: 'Edit a tax rate'
+  options:
+    _admin_route: TRUE
+  requirements:
+    _permission: 'administer stores'
+
+entity.commerce_tax_rate.delete_form:
+  path: '/admin/commerce/config/tax_type/{commerce_tax_type}/tax_rate/{commerce_tax_rate}/delete'
+  defaults:
+    _entity_form: 'commerce_tax_rate.delete'
+    _title: 'Delete a tax rate'
+  options:
+    _admin_route: TRUE
+  requirements:
+    _permission: 'administer stores'
