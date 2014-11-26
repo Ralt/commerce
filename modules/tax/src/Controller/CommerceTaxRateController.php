@@ -32,4 +32,19 @@ class CommerceTaxRateController extends ControllerBase {
     return $this->entityFormBuilder()->getForm($rate, 'add');
   }
 
+  /**
+   * Returns a rendered list of tax rates entities associated to the given tax type.
+   *
+   * @param string
+   *   The commerce_tax_type id.
+   *
+   * @return array
+   *   The list of commerce_tax_rates.
+   */
+  public function buildList($commerce_tax_type) {
+    $list_builder = $this->entityManager()->getListBuilder('commerce_tax_rate');
+
+    return $list_builder->setTaxType($commerce_tax_type)->render();
+  }
+
 }

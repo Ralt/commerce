@@ -41,7 +41,7 @@ entity.commerce_tax_type.delete_form:
 entity.commerce_tax_rate.list:
   path: '/admin/commerce/config/tax_type/{commerce_tax_type}/rates'
   defaults:
-    _entity_list: 'commerce_tax_rate'
+    _controller: '\Drupal\commerce_tax\Controller\CommerceTaxRateController::buildList'
     _title: 'Tax rates'
   options:
     _admin_route: TRUE
