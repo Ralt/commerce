@@ -8,6 +8,7 @@
 namespace Drupal\commerce_tax\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Url;
 
 /**
  * Provides route responses for tax rates.
@@ -42,9 +43,11 @@ class CommerceTaxRateController extends ControllerBase {
    *   The list of commerce_tax_rates.
    */
   public function buildList($commerce_tax_type) {
+    $build = array();
     $list_builder = $this->entityManager()->getListBuilder('commerce_tax_rate');
 
-    return $list_builder->setTaxType($commerce_tax_type)->render();
+    $build['commerce_tax_rates_table'] = $list_builder->setTaxType($commerce_tax_type)->render();
+    return $build;
   }
 
 }
