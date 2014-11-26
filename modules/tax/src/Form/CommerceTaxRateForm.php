@@ -105,14 +105,14 @@ class CommerceTaxRateForm extends EntityForm {
   }
 
   /**
-   * Validates that there is only one default.
+   * Validates that there is only one default per tax type.
    */
   public function validateDefaultness(array $element, FormStateInterface &$form_state, array $form) {
     $tax_rate = $this->getEntity();
     $default = $element['#value'];
     if ($default) {
-      $loaded_tax_rates = $this->taxRateStorage->loadByProperty(array(
-        'type' => $form_state['values']['type']
+      $loaded_tax_rates = $this->taxRateStorage->loadByProperties(array(
+        'type' => $form_state->getValue('type'),
       ));
       foreach ($loaded_tax_rates as $tax_rate) {
         if ($tax_rate->isDefault()) {
@@ -134,14 +134,16 @@ class CommerceTaxRateForm extends EntityForm {
     try {
       $tax_rate->save();
       drupal_set_message($this->t('Saved the %label tax rate.', array(
-            '%label' => $tax_rate->label(),
-          )));
-      $form_state->setRedirect('entity.commerce_tax_rate.list');
+        '%label' => $tax_rate->label(),
+      )));
+      $form_state->setRedirect('entity.commerce_tax_rate.list', array(
+        'commerce_tax_type' => $tax_rate->getType(),
+      ));
     }
     catch (\Exception $e) {
       drupal_set_message($this->t('The %label tax rate was not saved.', array(
-            '%label' => $tax_rate->label()
-          )), 'error');
+        '%label' => $tax_rate->label()
+      )), 'error');
       $this->logger('commerce_tax')->error($e);
       $form_state->setRebuild();
     }

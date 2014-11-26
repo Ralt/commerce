@@ -18,7 +18,7 @@ class CommerceTaxRateController extends ControllerBase {
    * Returns a rendered edit form to create a new term associated to the given tax type.
    *
    * @param string
-   *   The commerce_tax_type id
+   *   The commerce_tax_type id.
    *
    * @return array
    *   The commerce_tax_rate add form.
