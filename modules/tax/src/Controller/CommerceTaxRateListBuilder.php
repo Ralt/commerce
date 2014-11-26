@@ -60,7 +60,7 @@ class CommerceTaxRateListBuilder extends ConfigEntityListBuilder {
    * {@inheritdoc}
    */
   public function load() {
-    return $this->getStorage()->loadByProperties(array(
+    return $this->storage->loadByProperties(array(
       'id' => $this->tax_type,
     ));
   }
