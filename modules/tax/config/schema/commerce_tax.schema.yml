@@ -21,7 +21,7 @@ commerce_tax.commerce_tax_type.*:
       type: sequence
       label: 'Tax type rates'
       sequence:
-        - type: commerce_tax.commerce_tax_rate.[%key]
+        - type: commerce_tax.commerce_tax_rate.[%id]
 
 commerce_tax.commerce_tax_rate.*:
   type: config_entity
@@ -43,12 +43,12 @@ commerce_tax.commerce_tax_rate.*:
       type: sequence
       label: 'Tax rate amounts'
       sequence:
-        - type: commerce_tax.commerce_tax_rate_amount.[%key]
+        - type: commerce_tax.commerce_tax_rate_amount.[%id]
     type:
       type: sequence
       label: 'Tax rate type'
       sequence:
-        - type: commerce_tax.commerce_tax_type.[%key]
+        - type: commerce_tax.commerce_tax_type.[%id]
 
 commerce_tax.commerce_tax_rate_amount.*:
   type: config_entity
@@ -70,4 +70,4 @@ commerce_tax.commerce_tax_rate_amount.*:
       type: sequence
       label: 'Tax rate amount tax rate'
       sequence:
-        - type: commerce_tax.commerce_tax_rate.[%key]
+        - type: commerce_tax.commerce_tax_rate.[%id]
