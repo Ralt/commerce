@@ -70,7 +70,7 @@ class CommerceTaxRateForm extends EntityForm {
       '#maxlength' => 255,
       '#required' => TRUE,
     );
-    $form['display_name'] = array(
+    $form['displayName'] = array(
       '#type' => 'textfield',
       '#title' => $this->t('Display name'),
       '#default_value' => $tax_rate->getDisplayName(),
@@ -114,10 +114,10 @@ class CommerceTaxRateForm extends EntityForm {
       $loaded_tax_rates = $this->taxRateStorage->loadByProperties(array(
         'type' => $form_state->getValue('type'),
       ));
-      foreach ($loaded_tax_rates as $tax_rate) {
-        if ($tax_rate->isDefault()) {
+      foreach ($loaded_tax_rates as $rate) {
+        if ($rate->getId() !== $tax_rate->getId() && $rate->isDefault()) {
           $form_state->setError($element, $this->t('Tax rate %label is already the default.', array(
-            '%label' => $tax_rate->label(),
+            '%label' => $rate->label(),
           )));
           break;
         }
