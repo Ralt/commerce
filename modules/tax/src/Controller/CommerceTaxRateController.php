@@ -16,7 +16,7 @@ use Drupal\Core\Url;
 class CommerceTaxRateController extends ControllerBase {
 
   /**
-   * Returns a rendered edit form to create a new term associated to the given tax type.
+   * Returns a rendered add form to create a new tax rate associated to the given tax type.
    *
    * @param string
    *   The commerce_tax_type id.
