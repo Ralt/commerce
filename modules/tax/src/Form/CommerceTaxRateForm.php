@@ -22,13 +22,23 @@ class CommerceTaxRateForm extends EntityForm {
   protected $taxRateStorage;
 
   /**
+   * The tax type storage.
+   *
+   * @var \Drupal\Core\Entity\EntityStorageInterface
+   */
+  protected $taxTypeStorage;
+
+  /**
    * Creates a CommerceTaxRateForm instance.
    *
    * @param \Drupal\Core\Entity\EntityStorageInterface $tax_rate_storage
    *   The tax rate storage.
+   * @param \Drupal\Core\Entity\EntityStorageInterface $tax_type_storage
+   *   The tax ty[e storage.
    */
-  public function __construct(EntityStorageInterface $tax_rate_storage) {
+  public function __construct(EntityStorageInterface $tax_rate_storage, EntityStorageInterface $tax_type_storage) {
     $this->taxRateStorage = $tax_rate_storage;
+    $this->taxTypeStorage = $tax_type_storage;
   }
 
   /**
@@ -38,7 +48,7 @@ class CommerceTaxRateForm extends EntityForm {
     /** @var \Drupal\Core\Entity\EntityManagerInterface $entity_manager */
     $entity_manager = $container->get('entity.manager');
 
-    return new static($entity_manager->getStorage('commerce_tax_rate'));
+    return new static($entity_manager->getStorage('commerce_tax_rate'), $entity_manager->getStorage('commerce_tax_type'));
   }
 
   /**
@@ -87,7 +97,7 @@ class CommerceTaxRateForm extends EntityForm {
   /**
    * Validates the id field.
    */
-  public function validateId(array $element, FormStateInterface &$form_state, array $form) {
+  public function validateId(array $element, FormStateInterface $form_state, array $form) {
     $tax_rate = $this->getEntity();
     $id = $element['#value'];
     if (!preg_match('/[a-z_]+/', $id)) {
@@ -106,7 +116,7 @@ class CommerceTaxRateForm extends EntityForm {
   /**
    * Validates that there is only one default per tax type.
    */
-  public function validateDefaultness(array $element, FormStateInterface &$form_state, array $form) {
+  public function validateDefaultness(array $element, FormStateInterface $form_state, array $form) {
     $tax_rate = $this->getEntity();
     $default = $element['#value'];
     if ($default) {
@@ -136,8 +146,8 @@ class CommerceTaxRateForm extends EntityForm {
         '%label' => $tax_rate->label(),
       )));
 
+      $tax_type = $this->taxTypeStorage->load($tax_rate->getType());
       try {
-        $tax_type = $this->taxTypeStorage->load($tax_rate->getType());
         if (!$tax_type->hasRate($tax_rate)) {
           $tax_type->addRate($tax_rate);
           $tax_type->save();
@@ -151,7 +161,8 @@ class CommerceTaxRateForm extends EntityForm {
         drupal_set_message($this->t('The %label tax type was not saved.', array(
           '%label' => $tax_type->label(),
         )));
-        throw $e;
+        $this->logger('commerce_tax')->error($e);
+        $form_state->setRebuild();
       }
 
     }

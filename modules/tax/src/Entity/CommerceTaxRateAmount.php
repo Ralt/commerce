@@ -88,7 +88,7 @@ class CommerceTaxRateAmount extends ConfigEntityBase implements TaxRateAmountInt
    * {@inheritdoc}
    */
   public function setRate(TaxRateInterface $rate = null) {
-    $this->rate = $rate;
+    $this->rate = $rate->getId();
 
     return $this;
   }

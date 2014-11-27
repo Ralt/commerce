@@ -57,39 +57,39 @@ class CommerceTaxRateAmountForm extends EntityForm {
    */
   public function form(array $form, FormStateInterface $form_state) {
     $form = parent::form($form, $form_state);
-    $tax_rate = $this->entity;
+    $tax_rate_amount = $this->entity;
 
-    $form['type'] = array(
+    $form['rate'] = array(
       '#type' => 'hidden',
-      '#value' => $tax_rate->getType(),
+      '#value' => $tax_rate_amount->getRate(),
     );
     $form['id'] = array(
       '#type' => 'textfield',
       '#title' => $this->t('Machine name'),
-      '#default_value' => $tax_rate->getId(),
+      '#default_value' => $tax_rate_amount->getId(),
       '#element_validate' => array('::validateId'),
       '#description' => $this->t('Only lowercase, underscore-separated letters allowed.'),
       '#pattern' => '[a-z_]+',
       '#maxlength' => 255,
       '#required' => TRUE,
     );
-    $form['name'] = array(
-      '#type' => 'textfield',
-      '#title' => $this->t('Name'),
-      '#default_value' => $tax_rate->getName(),
+    $form['amount'] = array(
+      '#type' => 'number',
+      '#title' => $this->t('Amount'),
+      '#default_value' => $tax_rate_amount->getAmount(),
+      '#element_validate' => array('::validateAmount'),
       '#maxlength' => 255,
       '#required' => TRUE,
     );
-    $form['displayName'] = array(
-      '#type' => 'textfield',
-      '#title' => $this->t('Display name'),
-      '#default_value' => $tax_rate->getDisplayName(),
+    $form['startDate'] = array(
+      '#type' => 'date',
+      '#title' => $this->t('Start date'),
+      '#default_value' => $tax_rate_amount->getStartDate(),
     );
-    $form['default'] = array(
-      '#type' => 'checkbox',
-      '#title' => $this->t('Defaultness'),
-      '#default_value' => $tax_rate->isDefault(),
-      '#element_validate' => array('::validateDefaultness'),
+    $form['endDate'] = array(
+      '#type' => 'date',
+      '#title' => $this->t('End date'),
+      '#default_value' => $tax_rate_amount->getEndDate(),
     );
 
     return $form;
@@ -98,7 +98,7 @@ class CommerceTaxRateAmountForm extends EntityForm {
   /**
    * Validates the id field.
    */
-  public function validateId(array $element, FormStateInterface &$form_state, array $form) {
+  public function validateId(array $element, FormStateInterface $form_state, array $form) {
     $tax_rate_amount = $this->getEntity();
     $id = $element['#value'];
     if (!preg_match('/[a-z_]+/', $id)) {
@@ -115,6 +115,15 @@ class CommerceTaxRateAmountForm extends EntityForm {
   }
 
   /**
+   * Validates the amount field.
+   */
+  public function validateAmount(array $element, FormStateInterface $form_state, array $form) {
+    if (!is_numeric($element['#value'])) {
+      $form_state->setError($element, $this->t('The amount must be numeric.'));
+    }
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function save(array $form, FormStateInterface $form_state) {
@@ -126,8 +135,8 @@ class CommerceTaxRateAmountForm extends EntityForm {
         '%label' => $tax_rate_amount->label(),
       )));
 
+      $tax_rate = $this->taxRateStorage->load($tax_rate_amount->getRate());
       try {
-        $tax_rate = $this->taxRateStorage->load($tax_rate_amount->getRate());
         if (!$tax_rate->hasAmount($tax_rate_amount)) {
           $tax_rate->addAmount($tax_rate_amount);
           $tax_rate->save();
@@ -139,9 +148,10 @@ class CommerceTaxRateAmountForm extends EntityForm {
       }
       catch (\Exception $e) {
         drupal_set_message($this->t('The %label tax rate was not saved.', array(
-          '%label' => $tax_type->label(),
+          '%label' => $tax_rate->label(),
         )));
-        throw $e;
+        $this->logger('commerce_tax')->error($e);
+        $form_state->setRebuild();
       }
 
     }

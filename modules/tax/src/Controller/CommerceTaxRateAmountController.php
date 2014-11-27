@@ -27,7 +27,7 @@ class CommerceTaxRateAmountController extends ControllerBase {
     $rate_amount = $this
       ->entityManager()
       ->getStorage('commerce_tax_rate_amount')
-      ->create(array('type' => $commerce_tax_rate));
+      ->create(array('rate' => $commerce_tax_rate));
 
     return $this->entityFormBuilder()->getForm($rate_amount, 'add');
   }
