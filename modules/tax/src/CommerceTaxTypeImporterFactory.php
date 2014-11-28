@@ -29,7 +29,7 @@ class CommerceTaxTypeImporterFactory implements CommerceTaxTypeImporterFactoryIn
    * {@inheritdoc}
    */
   public function createInstance($tax_types_folder) {
-    return new TaxTypeImporter($this->entityManager, $tax_types_folder);
+    return new CommerceTaxTypeImporter($this->entityManager, $tax_types_folder);
   }
 
 }
