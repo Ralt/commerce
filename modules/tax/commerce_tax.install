@@ -5,7 +5,7 @@
  * Contains the install-related tasks of commerce_tax.
  */
 
-define('COMMERCE_TAX_DEFAULT_TAX_TYPES', __DIR__ . '/default_tax_types/');
+define('COMMERCE_TAX_DEFAULT_TAX_TYPES', __DIR__ . '/default/');
 
 /**
  * Implements hook_install().

@@ -14,10 +14,7 @@ interface TaxTypeImporterInterface {
 
   /**
    * Imports all the tax types defined in a folder.
-   *
-   * @param string $tax_types_folder
-   *   The folder where the tax types definitions are.
    */
-  public function import($tax_types_folder);
+  public function import();
 
 }
