@@ -8,6 +8,7 @@
 namespace Drupal\commerce_tax\Tests;
 
 use Drupal\simpletest\WebTestBase;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
  * Tests the commerce_tax_type entity forms.
@@ -15,6 +16,8 @@ use Drupal\simpletest\WebTestBase;
  * @group commerce
  */
 class TaxTypeTest extends WebTestBase {
+
+  use StringTranslationTrait;
 
   /**
    * Modules to enable.
@@ -66,7 +69,7 @@ class TaxTypeTest extends WebTestBase {
   protected function checkDefaultConfig() {
     $this->assertTrue((bool) \Drupal::config('commerce_tax.commerce_tax_type.sales_tax'));
     $this->assertTrue((bool) \Drupal::config('commerce_tax.commerce_tax_type.vat'));
-    $this->assertTrue(\Drupal::config('commerce_tax.commerce_tax_type.sales_tax.name') === 'Sales tax');
+    $this->assertTrue(\Drupal::config('commerce_tax.commerce_tax_type.sales_tax.name') === $this->t('Sales tax'));
   }
 
 }
