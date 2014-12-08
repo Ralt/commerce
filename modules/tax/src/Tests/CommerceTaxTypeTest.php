@@ -45,7 +45,9 @@ class CommerceTaxTypeTest extends WebTestBase {
    * Checks that the tax types forms exist.
    */
   public function testTaxTypeForms() {
-    $this->checkTaxTypeForms();
+    $name = 'test_type';
+    $this->checkTaxTypeAddForm($name);
+    $this->checkTaxTypeEditForm($name);
   }
 
   /**
@@ -80,14 +82,6 @@ class CommerceTaxTypeTest extends WebTestBase {
   }
 
   /**
-   * Checks the tax type forms.
-   */
-  protected function checkTaxTypeForms() {
-    $name = 'test_type';
-    $this->checkTaxTypeAddForm($name);
-  }
-
-  /**
    * Checks the tax type add form.
    */
   protected function checkTaxTypeAddForm($name) {
@@ -101,6 +95,19 @@ class CommerceTaxTypeTest extends WebTestBase {
     $this->assertFalse((bool) entity_load('commerce_tax_type', $name));
     $this->drupalPostForm('admin/commerce/config/tax/type/add', $edit, $this->t('Save'));
     $this->assertTrue((bool) entity_load('commerce_tax_type', $name));
+  }
+
+  protected function checkTaxTypeEditForm($name) {
+    $edit = array(
+      'id' => $name,
+      'name' => 'Test type',
+      'roundingMode' => '2',
+      'tag' => 'test',
+    );
+
+    $this->assertFalse(entity_load('commerce_tax_type', $name)->getRoundingMode() === 2);
+    $this->drupalPostForm('admin/commerce/config/tax/type/' . $name . '/edit', $edit, $this->t('Save'));
+    $this->assertTrue(entity_load('commerce_tax_type', $name)->getRoundingMode() === 2);
   }
 
 }
