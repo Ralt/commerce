@@ -48,6 +48,7 @@ class CommerceTaxTypeTest extends WebTestBase {
     $name = 'test_type';
     $this->checkTaxTypeAddForm($name);
     $this->checkTaxTypeEditForm($name);
+    $this->checkTaxTypeDeleteForm($name);
   }
 
   /**
@@ -108,6 +109,16 @@ class CommerceTaxTypeTest extends WebTestBase {
     $this->assertFalse(entity_load('commerce_tax_type', $name)->getRoundingMode() === 2);
     $this->drupalPostForm('admin/commerce/config/tax/type/' . $name . '/edit', $edit, $this->t('Save'));
     $this->assertTrue(entity_load('commerce_tax_type', $name)->getRoundingMode() === 2);
+  }
+
+  protected function checkTaxTypeDeleteForm($name) {
+    $edit = array(
+      'confirm' => '1',
+    );
+
+    $this->assertTrue((bool) entity_load('commerce_tax_type', $name));
+    $this->drupalPostForm('admin/commerce/config/tax/type/' . $name . '/delete', $edit, $this->t('Delete'));
+    $this->assertFalse((bool) entity_load('commerce_tax_type', $name));
   }
 
 }
