@@ -42,6 +42,13 @@ class CommerceTaxTypeTest extends WebTestBase {
   }
 
   /**
+   * Checks that the tax types forms exist.
+   */
+  public function testTaxTypeForms() {
+    $this->checkTaxTypeForms();
+  }
+
+  /**
    * Checks that the default tax types exist on the admin page.
    */
   protected function checkDefaultAdminPage() {
@@ -67,9 +74,33 @@ class CommerceTaxTypeTest extends WebTestBase {
    * Checks that the default tax types exist in the config.
    */
   protected function checkDefaultConfig() {
-    $this->assertTrue((bool) \Drupal::config('commerce_tax.commerce_tax_type.sales_tax'));
-    $this->assertTrue((bool) \Drupal::config('commerce_tax.commerce_tax_type.vat'));
-    $this->assertTrue(\Drupal::config('commerce_tax.commerce_tax_type.sales_tax')->get('name') === $this->t('Sales tax'));
+    $this->assertTrue((bool) entity_load('commerce_tax_type', 'sales_tax'));
+    $this->assertTrue((bool) entity_load('commerce_tax_type', 'vat'));
+    $this->assertTrue(entity_load('commerce_tax_type', 'sales_tax')->getName() === $this->t('Sales tax'));
+  }
+
+  /**
+   * Checks the tax type forms.
+   */
+  protected function checkTaxTypeForms() {
+    $name = 'test_type';
+    $this->checkTaxTypeAddForm($name);
+  }
+
+  /**
+   * Checks the tax type add form.
+   */
+  protected function checkTaxTypeAddForm($name) {
+    $edit = array(
+      'id' => $name,
+      'name' => 'Test type',
+      'roundingMode' => '1',
+      'tag' => 'test',
+    );
+
+    $this->assertFalse((bool) entity_load('commerce_tax_type', $name));
+    $this->drupalPostForm('admin/commerce/config/tax/type/add', $edit, $this->t('Save'));
+    $this->assertTrue((bool) entity_load('commerce_tax_type', $name));
   }
 
 }
