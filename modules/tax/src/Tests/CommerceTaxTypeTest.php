@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\commerce_tax\Tests\TaxTypeTest.
+ * Contains \Drupal\commerce_tax\Tests\CommerceTaxTypeTest.
  */
 
 namespace Drupal\commerce_tax\Tests;
@@ -15,7 +15,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
  *
  * @group commerce
  */
-class TaxTypeTest extends WebTestBase {
+class CommerceTaxTypeTest extends WebTestBase {
 
   use StringTranslationTrait;
 
@@ -69,7 +69,7 @@ class TaxTypeTest extends WebTestBase {
   protected function checkDefaultConfig() {
     $this->assertTrue((bool) \Drupal::config('commerce_tax.commerce_tax_type.sales_tax'));
     $this->assertTrue((bool) \Drupal::config('commerce_tax.commerce_tax_type.vat'));
-    $this->assertTrue(\Drupal::config('commerce_tax.commerce_tax_type.sales_tax.name') === $this->t('Sales tax'));
+    $this->assertTrue(\Drupal::config('commerce_tax.commerce_tax_type.sales_tax')->get('name') === $this->t('Sales tax'));
   }
 
 }
