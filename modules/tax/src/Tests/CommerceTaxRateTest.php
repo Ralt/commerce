@@ -78,7 +78,7 @@ class CommerceTaxRateTest extends CommerceTaxTestBase {
     );
 
     $this->assertTrue((bool) entity_load('commerce_tax_rate', $name));
-    $this->drupalPostForm('admin/commerce/config/tax/rate/' . $name . '/delete', $edit, $this->('Delete'));
+    $this->drupalPostForm('admin/commerce/config/tax/rate/' . $name . '/delete', $edit, $this->t('Delete'));
     $this->assertFalse((bool) entity_load('commerce_tax_rate', $name));
   }
 

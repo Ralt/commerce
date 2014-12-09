@@ -64,7 +64,7 @@ class CommerceTaxRateAmountTest extends CommerceTaxTestBase {
     );
 
     $this->assertFalse((bool) entity_load('commerce_tax_rate_amount', $name));
-    $this->drupalPostForm('admin/commerce/config/tax/amount/' . $tax_type_name . '/add', $edit, $this->t('Save'));
+    $this->drupalPostForm('admin/commerce/config/tax/amount/' . $tax_rate_name . '/add', $edit, $this->t('Save'));
     $this->assertTrue((bool) entity_load('commerce_tax_rate_amount', $name));
   }
 
@@ -78,9 +78,9 @@ class CommerceTaxRateAmountTest extends CommerceTaxTestBase {
       'amount' => '20',
     );
 
-    $this->assertFalse(entity_load('commerce_tax_rate_amount', $name)->getAmount() === 20);
+    $this->assertFalse(entity_load('commerce_tax_rate_amount', $name)->getAmount() === (double) 20);
     $this->drupalPostForm('admin/commerce/config/tax/amount/' . $name . '/edit', $edit, $this->t('Save'));
-    $this->assertTrue(entity_load('commerce_tax_rate_amount', $name)->getAmount() === 20);
+    $this->assertTrue(entity_load('commerce_tax_rate_amount', $name)->getAmount() === (double) 20);
   }
 
   /**
@@ -92,7 +92,7 @@ class CommerceTaxRateAmountTest extends CommerceTaxTestBase {
     );
 
     $this->assertTrue((bool) entity_load('commerce_tax_rate_amount', $name));
-    $this->drupalPostForm('admin/commerce/config/tax/amount/' . $name . '/delete', $edit, $this->('Delete'));
+    $this->drupalPostForm('admin/commerce/config/tax/amount/' . $name . '/delete', $edit, $this->t('Delete'));
     $this->assertFalse((bool) entity_load('commerce_tax_rate_amount', $name));
   }
 
