@@ -7,31 +7,12 @@
 
 namespace Drupal\commerce_tax\Tests;
 
-use Drupal\simpletest\WebTestBase;
-use Drupal\Core\StringTranslation\StringTranslationTrait;
-
 /**
  * Tests the commerce_tax_type entity forms.
  *
  * @group commerce
  */
-class CommerceTaxTypeTest extends WebTestBase {
-
-  use StringTranslationTrait;
-
-  /**
-   * Modules to enable.
-   */
-  public static $modules = array('commerce_tax');
-
-  /**
-   * {@inheritdoc}
-   */
-  protected function setUp() {
-    parent::setUp();
-
-    $this->drupalLogin($this->root_user);
-  }
+class CommerceTaxTypeTest extends CommerceTaxTestBase {
 
   /**
    * Checks that the default tax types are correctly imported.
@@ -98,6 +79,9 @@ class CommerceTaxTypeTest extends WebTestBase {
     $this->assertTrue((bool) entity_load('commerce_tax_type', $name));
   }
 
+  /**
+   * Checks the tax type edit form.
+   */
   protected function checkTaxTypeEditForm($name) {
     $edit = array(
       'id' => $name,
@@ -111,6 +95,9 @@ class CommerceTaxTypeTest extends WebTestBase {
     $this->assertTrue(entity_load('commerce_tax_type', $name)->getRoundingMode() === 2);
   }
 
+  /**
+   * Checks the tax type delete form.
+   */
   protected function checkTaxTypeDeleteForm($name) {
     $edit = array(
       'confirm' => '1',
