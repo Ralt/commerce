@@ -14,7 +14,7 @@ use Drupal\Core\Url;
 /**
  * Builds the form to delete a tax type.
  */
-class CommerceTaxRateDeleteAmountForm extends EntityConfirmFormBase {
+class CommerceTaxRateAmountDeleteForm extends EntityConfirmFormBase {
 
   /**
    * {@inheritdoc}
