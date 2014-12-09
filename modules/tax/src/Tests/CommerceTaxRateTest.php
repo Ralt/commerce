@@ -8,7 +8,7 @@
 namespace Drupal\commerce_tax\Tests;
 
 /**
- * Tests the commerce_tax_type entity forms.
+ * Tests the commerce_tax_rate entity forms.
  *
  * @group commerce
  */
