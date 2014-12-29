@@ -69,6 +69,7 @@ class CommerceTaxTypeForm extends EntityForm {
     $form['compound'] = array(
       '#type' => 'checkbox',
       '#title' => $this->t('Compound'),
+      '#description' => $this->t("Compound tax is calculated on top of a primary tax. For example, Canada's Provincial Sales Tax (PST) is compound, calculated on a price that already includes the Goods and Services Tax (GST)."),
       '#default_value' => $tax_type->isCompound(),
     );
     $form['roundingMode'] = array(
@@ -86,6 +87,7 @@ class CommerceTaxTypeForm extends EntityForm {
     $form['tag'] = array(
       '#type' => 'textfield',
       '#title' => $this->t('Tag'),
+      '#description' => $this->t('Used by the resolvers to analyze only the tax types relevant to them. For example, the EuTaxTypeResolver would analyze only the tax types with the "EU" tag.'),
       '#default_value' => $tax_type->getTag(),
       '#element_validate' => array('::validateTag'),
       '#pattern' => '[a-zA-Z0-9]+',
