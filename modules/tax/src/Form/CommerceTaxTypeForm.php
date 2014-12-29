@@ -68,13 +68,13 @@ class CommerceTaxTypeForm extends EntityForm {
     );
     $form['compound'] = array(
       '#type' => 'checkbox',
-      '#title' => $this->t('Compoundness'),
+      '#title' => $this->t('Compound'),
       '#default_value' => $tax_type->isCompound(),
     );
     $form['roundingMode'] = array(
       '#type' => 'radios',
       '#title' => $this->t('Rounding mode'),
-      '#default_value' => $tax_type->getRoundingMode(),
+      '#default_value' => $tax_type->getRoundingMode() ?: CommerceTaxType::ROUND_HALF_UP,
       '#options' => array(
         CommerceTaxType::ROUND_HALF_UP => $this->t('Round up'),
         CommerceTaxType::ROUND_HALF_DOWN => $this->t('Round down'),
@@ -90,7 +90,6 @@ class CommerceTaxTypeForm extends EntityForm {
       '#element_validate' => array('::validateTag'),
       '#pattern' => '[a-zA-Z0-9]+',
       '#maxlength' => 255,
-      '#required' => TRUE,
     );
 
     return $form;
