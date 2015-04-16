@@ -41,7 +41,8 @@ use Drupal\user\UserInterface;
  *     "id" = "store_id",
  *     "bundle" = "type",
  *     "label" = "name",
- *     "uuid" = "uuid"
+ *     "uuid" = "uuid",
+ *     "langcode" = "langcode"
  *   },
  *   links = {
  *     "edit-form" = "entity.commerce_store.edit_form",

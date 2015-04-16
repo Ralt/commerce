@@ -31,8 +31,9 @@ function commerce_toolbar() {
   $items['commerce'] = array(
     '#type' => 'toolbar_item',
     '#attached' => array(
-      'css' => array(
-        drupal_get_path('module', 'commerce') . '/css/commerce.icons.css',
+      'html_head' => array(
+        '#tag' => 'style',
+        '#value' => drupal_get_path('module', 'commerce') . '/css/commerce.icons.css',
       ),
     ),
   );
